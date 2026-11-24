@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCL-90 症状自评量表 (Symptom Checklist-90-R) 专业测评</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+            },
+            tealbrand: {
+              500: '#0d9488',
+              600: '#0d9488',
+            },
+            slatebg: '#f8fafc',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans SC"', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-shadow-none {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+    }
+
+    /* Option radio custom animations */
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    .option-btn:hover {
+      background-color: #f0f9ff;
+      border-color: #38bdf8;
+    }
+    .option-btn.active {
+      background-color: #e0f2fe;
+      border-color: #0284c7;
+      color: #0369a1;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(2, 132, 199, 0.15);
+    }
+
+    /* Progress bar smooth transition */
+    .progress-bar-inner {
+      transition: width 0.3s ease-in-out;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+  <!-- 顶栏 Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-500 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-heart-pulse text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-800 leading-tight">SCL-90 症状自评量表</h1>
+          <p class="text-xs text-slate-500">Symptom Checklist-90-R (标准90题版)</p>
+        </div>
+      </div>
+      
+      <div id="header-badge" class="hidden md:flex items-center space-x-2 text-xs bg-slate-100 text-slate-600 px-3 py-1.5 rounded-full border border-slate-200">
+        <i class="fa-solid fa-shield-halved text-teal-600"></i>
+        <span>专业心理评估 · 隐私本地计算</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主体区域 Main Container -->
+  <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-1">
+
+    <!-- 1. 指导语与首页 (Landing Page) -->
+    <section id="screen-intro" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-6">
+      <div class="border-b border-slate-100 pb-5">
+        <div class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand-600 bg-brand-50 px-3 py-1 rounded-full border border-brand-100 mb-3">
+          <i class="fa-solid fa-circle-info"></i> 测评须知与指南
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">SCL-90 精神与心理健康自评测验</h2>
+        <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+          SCL-90 (Symptom Checklist 90) 是世界上最著名的心理健康诊断量表之一。包含 90 个项目，涵盖躯体化、强迫、人际敏感、抑郁、焦虑、敌对、恐怖、偏执、精神病性及睡眠饮食等 10 个心理因子。
+        </p>
+      </div>
+
+      <!-- 填写说明 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 font-bold">1</div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">时间范围</h4>
+            <p class="text-xs text-slate-500 mt-1">评估请以<b>“近一周内（包括今天）”</b>的实际感觉与体验为准。</p>
+          </div>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 font-bold">2</div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">计分标准</h4>
+            <p class="text-xs text-slate-500 mt-1">1=从无，2=轻度，3=中度，4=偏重，5=严重（5级评分）。</p>
+          </div>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 font-bold">3</div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-800">直觉作答</h4>
+            <p class="text-xs text-slate-500 mt-1">请凭第一直觉快速选择，切勿反复推敲或填选满意答案。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 友情提示 -->
+      <div class="p-4 bg-amber-50/80 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed flex items-start gap-2.5">
+        <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+        <div>
+          <b>声明：</b>本测试为筛查辅助工具，测试结果仅供自我了解与健康参考，不能替代精神科医师或心理咨询师的临床诊断。
+        </div>
+      </div>
+
+      <!-- 开始测试按钮 -->
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-xs text-slate-400">
+          <i class="fa-regular fa-clock mr-1"></i> 预计耗时：8 - 15 分钟 (共 90 题)
+        </div>
+        <button id="btn-start" class="w-full sm:w-auto px-8 py-3.5 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-medium rounded-xl shadow-lg shadow-brand-500/25 transition duration-200 flex items-center justify-center gap-2">
+          <span>开始自评测验</span>
+          <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. 答题页面 (Quiz Flow Screen) -->
+    <section id="screen-quiz" class="hidden space-y-4">
+      
+      <!-- 进度指示卡片 -->
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm sticky top-16 z-20">
+        <div class="flex items-center justify-between text-xs text-slate-500 mb-2 font-medium">
+          <div class="flex items-center gap-2">
+            <span id="page-indicator" class="bg-brand-50 text-brand-600 font-bold px-2.5 py-0.5 rounded-md border border-brand-100">
+              第 1 / 9 页
+            </span>
+            <span>已完成 <b id="answered-count" class="text-slate-800 font-bold">0</b> / 90 题</span>
+          </div>
+          <span id="progress-percent" class="text-brand-600 font-bold">0%</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+          <div id="progress-bar-inner" class="bg-gradient-to-r from-brand-500 to-teal-500 h-full w-0 progress-bar-inner"></div>
+        </div>
+      </div>
+
+      <!-- 题目容器 (每页展示 10 题) -->
+      <div id="questions-container" class="space-y-4">
+        <!-- JS 动态注入 -->
+      </div>
+
+      <!-- 分页控制按钮组 -->
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-between gap-4">
+        <button id="btn-prev-page" class="px-5 py-2.5 rounded-lg border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition text-sm flex items-center gap-1.5">
+          <i class="fa-solid fa-chevron-left text-xs"></i>
+          <span>上一页</span>
+        </button>
+
+        <div id="page-dots" class="hidden sm:flex items-center gap-1.5">
+          <!-- 分页小点 -->
+        </div>
+
+        <button id="btn-next-page" class="px-6 py-2.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-medium active:scale-95 transition text-sm flex items-center gap-1.5 shadow-sm">
+          <span>下一页</span>
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+
+        <button id="btn-submit" class="hidden px-6 py-2.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-medium active:scale-95 transition text-sm flex items-center gap-1.5 shadow-md">
+          <i class="fa-solid fa-check text-xs"></i>
+          <span>提交测评并生成报告</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. 结果页面 (Result & Analysis Screen) -->
+    <section id="screen-result" class="hidden space-y-6">
+      
+      <!-- 报告头部卡片 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 print-shadow-none">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-6 gap-4">
+          <div>
+            <div class="inline-flex items-center gap-1 text-xs font-bold text-teal-600 bg-teal-50 px-2.5 py-1 rounded-md mb-2">
+              <i class="fa-solid fa-file-medical text-xs"></i> SCL-90 心理健康自评报告
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">综合测评分析报告</h2>
+            <p class="text-xs text-slate-400 mt-1">测评完成时间：<span id="report-date">2026-11-24</span></p>
+          </div>
+          
+          <div class="flex items-center gap-2 no-print">
+            <button id="btn-print" class="px-4 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium transition flex items-center gap-1.5">
+              <i class="fa-solid fa-print"></i> 打印/另存为PDF
+            </button>
+            <button id="btn-restart" class="px-4 py-2 border border-brand-200 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-medium transition flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate-right"></i> 重新测评
+            </button>
+          </div>
+        </div>
+
+        <!-- 关键核心指标概述 4宫格 -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 font-medium block mb-1">总分 (Total Score)</span>
+            <span id="res-total-score" class="text-2xl sm:text-3xl font-extrabold text-slate-800">90</span>
+            <span class="text-[10px] text-slate-400 block mt-1">范围: 90 - 450分</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 font-medium block mb-1">总均分 (GSI)</span>
+            <span id="res-gsi" class="text-2xl sm:text-3xl font-extrabold text-brand-600">1.00</span>
+            <span class="text-[10px] text-slate-400 block mt-1">总分 / 90 (正常 &lt; 2.0)</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 font-medium block mb-1">阳性项目数</span>
+            <span id="res-pos-count" class="text-2xl sm:text-3xl font-extrabold text-slate-800">0</span>
+            <span class="text-[10px] text-slate-400 block mt-1">得分 &ge; 2分项数 (正常 &le; 43)</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+            <span class="text-xs text-slate-500 font-medium block mb-1">阳性症状均分 (PST)</span>
+            <span id="res-pst" class="text-2xl sm:text-3xl font-extrabold text-slate-800">0.00</span>
+            <span class="text-[10px] text-slate-400 block mt-1">阳性总分 / 阳性数</span>
+          </div>
+        </div>
+
+        <!-- 整体评估结论 -->
+        <div id="res-summary-box" class="mt-6 p-4 rounded-xl border leading-relaxed text-sm">
+          <!-- 动态注入结论 -->
+        </div>
+      </div>
+
+      <!-- 10 大因子得分剖析柱状图与明细 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 print-shadow-none space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-brand-600"></i>
+            <span>10 大心理因子得分柱状图剖析</span>
+          </h3>
+          <p class="text-xs text-slate-500 mt-1">各因子分 = 该因子各项目得分之和 / 项目数。因子分 &ge; 2.0 表示存在轻度相关症状；&ge; 3.0 表示存在中度以上较明显症状。</p>
+        </div>
+
+        <!-- 自定义 CSS 柱状图 -->
+        <div id="factors-chart-container" class="space-y-3 pt-2">
+          <!-- JS 动态填充柱状图与分数 -->
+        </div>
+      </div>
+
+      <!-- 各因子详细解读列表 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 print-shadow-none space-y-4">
+        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+          <i class="fa-solid fa-list-check text-teal-600"></i>
+          <span>各因子详细诊断与解释</span>
+        </h3>
+
+        <div id="factors-detail-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <!-- JS 动态生成 10 个因子的详细解析卡片 -->
+        </div>
+      </div>
+
+      <!-- 专业建议与后置引导 -->
+      <div class="bg-slate-800 text-slate-100 rounded-2xl p-6 sm:p-8 space-y-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-user-doctor text-teal-400"></i>
+          <span>心理健康后续改善建议</span>
+        </h3>
+        <ul class="text-xs text-slate-300 space-y-2 leading-relaxed list-disc list-inside">
+          <li><b>建立良好生活规律：</b>保持充足睡眠、均衡饮食与适度有氧运动（如快走、瑜伽），有助于调节神经神经递质系统。</li>
+          <li><b>合理宣泄与倾诉：</b>若觉情绪压抑或紧张焦虑，尝试与信任的亲友沟通，或通过撰写日记进行情绪觉察。</li>
+          <li><b>寻求专业帮助：</b>若某个或多个因子分超过 3.0 分，或感到心理困扰已明显影响工作与日常生活，建议前往正规三甲医院心理科/精神科或专业心理咨询机构做系统评估。</li>
+        </ul>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- 页脚 Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 mt-8 text-center text-xs text-slate-400 no-print">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div>SCL-90 症状自评量表 (Symptom Checklist-90-R) 标准测评系统</div>
+      <div>所有测验计算均在本地浏览器安全完成</div>
+    </div>
+  </footer>
+
+  <!-- 校验提示 Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-medium shadow-2xl transition duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+    <i class="fa-solid fa-circle-exclamation text-amber-400"></i>
+    <span id="toast-msg">请完成本页所有题目后再继续</span>
+  </div>
+
+  <script>
+    /**
+     * SCL-90 官方标准 90 题题库
+     */
+    const scl90Items = [
+      "1. 头痛",
+      "2. 神经过敏，心中不踏实",
+      "3. 头脑中有不必要的想法或字句盘旋",
+      "4. 头晕或昏倒",
+      "5. 对异性的兴趣减退",
+      "6. 对旁人感到不满意或不体谅",
+      "7. 感到有人在控制自己的思想",
+      "8. 责怪别人制造麻烦",
+      "9. 忘性大，难以记住事情",
+      "10. 担心自己的衣饰整齐及仪态端正",
+      "11. 容易烦恼和激动",
+      "12. 胸部疼痛",
+      "13. 害怕空旷的场所或街道",
+      "14. 感到精力下降，活动减慢",
+      "15. 想结束自己的生命",
+      "16. 听到别人听不到的声音",
+      "17. 发抖",
+      "18. 感到大多数人不可信任",
+      "19. 胃口不好，不想吃东西",
+      "20. 容易哭泣",
+      "21. 同异性相处时感到害羞或不自在",
+      "22. 感到受骗、中了圈套或有人想害自己",
+      "23. 无缘无故地突然感到受惊吓",
+      "24. 发脾气，控制不住自己",
+      "25. 怕单独出门",
+      "26. 经常责怪自己",
+      "27. 腰痛",
+      "28. 感到难以完成任务",
+      "29. 感到孤独",
+      "30. 感到苦闷",
+      "31. 过分担忧",
+      "32. 对事物不感兴趣",
+      "33. 感到害怕",
+      "34. 感情容易受到伤害",
+      "35. 旁人能知道你的私下想法",
+      "36. 感到别人不理解你、同情你",
+      "37. 感到人们对你不友好，不喜欢你",
+      "38. 做事必须很慢以保证正确",
+      "39. 心跳得很厉害",
+      "40. 恶心或胃部不舒服",
+      "41. 感到比不上他人",
+      "42. 肌肉酸痛",
+      "43. 感到有人在监视你、谈论你",
+      "44. 难以入睡",
+      "45. 做事必须反复检查",
+      "46. 难以作出决定",
+      "47. 怕乘电车、公交、地铁或火车",
+      "48. 呼吸困难",
+      "49. 一阵阵发冷或发热",
+      "50. 因感到害怕而避开某些事物、场合或活动",
+      "51. 脑子变空了，发呆",
+      "52. 身体麻木或刺痛",
+      "53. 喉咙有梗塞感",
+      "54. 感到前途毫无希望",
+      "55. 难以集中注意力",
+      "56. 感到身体某一部分软弱无力",
+      "57. 感到紧张或容易神经过敏",
+      "58. 感到手或脚沉重",
+      "59. 想到有关死亡的事",
+      "60. 吃得太多",
+      "61. 当别人看着你或谈论你时感到不自在",
+      "62. 有一些不属于你自己的想法",
+      "63. 有想打人或伤害他人的冲动",
+      "64. 早醒",
+      "65. 必须反复洗手、点数或触摸某些东西",
+      "66. 睡得不稳不深",
+      "67. 有打破或破坏东西的冲动",
+      "68. 有一些别人没有的想法或信念",
+      "69. 感到对别人神经过敏",
+      "70. 在商店或电影院等拥挤人群中感到不自在",
+      "71. 感到做任何事情都很困难",
+      "72. 一阵阵恐惧或惊恐",
+      "73. 在公共场合吃东西感到不舒服",
+      "74. 经常与人争论",
+      "75. 单独一人时感到神经紧张",
+      "76. 别人对你的成绩没有给予足够的评价",
+      "77. 即使同别人在一起也感到孤单",
+      "78. 感到坐立不安，心神不定",
+      "79. 感到自己没有什么价值",
+      "80. 感到熟悉的环境变得陌生或不真实",
+      "81. 大声喊叫或抛掷东西",
+      "82. 害怕会在公共场合晕倒",
+      "83. 感到别人在占你的便宜",
+      "84. 为一些有关“性”的想法所困扰",
+      "85. 你认为应该为你过去的情感或错误受到惩罚",
+      "86. 感到身体或精神上有要崩溃的感觉",
+      "87. 感到身体某个部位有严重疾病",
+      "88. 从未感到同另外一个人很亲密",
+      "89. 感到自己有罪恶感",
+      "90. 感到自己的脑子有毛病"
+    ];
+
+    /**
+     * SCL-90 官方 10 大因子项目映射 (索引均转换为 1-based 项目序号)
+     */
+    const factorDefinitions = {
+      somatization: {
+        name: "躯体化",
+        items: [1, 4, 12, 27, 40, 42, 48, 49, 52, 53, 56, 58],
+        desc: "反映身体有主观不适感，如心悸、头痛、胃肠不适、肌肉酸痛等。"
+      },
+      obsessive: {
+        name: "强迫症状",
+        items: [3, 9, 10, 28, 38, 45, 46, 51, 55, 65],
+        desc: "反映强迫思考、反复检查、注意力不集中或记忆力减退感。"
+      },
+      interpersonal: {
+        name: "人际关系敏感",
+        items: [6, 21, 34, 36, 37, 41, 61, 69, 73],
+        desc: "反映在人际交往中的不自在、自卑、敏感及受伤害感。"
+      },
+      depression: {
+        name: "抑郁",
+        items: [5, 14, 15, 20, 22, 26, 29, 30, 31, 32, 54, 71, 79],
+        desc: "反映苦闷、孤独、缺乏动力、悲观失望及生活兴趣减退。"
+      },
+      anxiety: {
+        name: "焦虑",
+        items: [2, 17, 23, 33, 39, 57, 72, 78, 80, 86],
+        desc: "反映游离性焦虑、神经过敏、紧张、惊恐及躯体性焦虑体征。"
+      },
+      hostility: {
+        name: "敌对",
+        items: [11, 24, 63, 67, 74, 81],
+        desc: "反映烦躁、易怒、争论、冲动或控制不住脾气的心态。"
+      },
+      phobic: {
+        name: "恐怖",
+        items: [13, 25, 47, 50, 70, 75, 82],
+        desc: "反映对出门、空旷场合、人群密集处或乘坐交通工具的害怕避开心理。"
+      },
+      paranoid: {
+        name: "偏执",
+        items: [8, 18, 43, 68, 76, 83],
+        desc: "反映猜疑、自傲、被指责感或认为别人不可信任的想法。"
+      },
+      psychoticism: {
+        name: "精神病性",
+        items: [7, 16, 35, 62, 77, 84, 85, 87, 88, 90],
+        desc: "反映幻觉、被控感、孤立感或极端的异样思维体验。"
+      },
+      additional: {
+        name: "睡眠及饮食",
+        items: [19, 44, 59, 60, 64, 66, 89],
+        desc: "反映入睡困难、早醒、睡眠不深、食欲改变及内疚感等指标。"
+      }
+    };
+
+    const options = [
+      { text: "从无", val: 1 },
+      { text: "轻度", val: 2 },
+      { text: "中度", val: 3 },
+      { text: "偏重", val: 4 },
+      { text: "严重", val: 5 }
+    ];
+
+    // 全局状态变量
+    const ITEMS_PER_PAGE = 10;
+    const TOTAL_PAGES = Math.ceil(scl90Items.length / ITEMS_PER_PAGE);
+    let currentPage = 0; // 0-based
+    let answers = new Array(90).fill(0); // 存 1-5 分，未答为 0
+
+    // DOM 元素获取
+    const screenIntro = document.getElementById('screen-intro');
+    const screenQuiz = document.getElementById('screen-quiz');
+    const screenResult = document.getElementById('screen-result');
+
+    const btnStart = document.getElementById('btn-start');
+    const btnPrevPage = document.getElementById('btn-prev-page');
+    const btnNextPage = document.getElementById('btn-next-page');
+    const btnSubmit = document.getElementById('btn-submit');
+    const btnPrint = document.getElementById('btn-print');
+    const btnRestart = document.getElementById('btn-restart');
+
+    const questionsContainer = document.getElementById('questions-container');
+    const pageIndicator = document.getElementById('page-indicator');
+    const answeredCountEl = document.getElementById('answered-count');
+    const progressPercentEl = document.getElementById('progress-percent');
+    const progressBarInner = document.getElementById('progress-bar-inner');
+    const pageDotsContainer = document.getElementById('page-dots');
+    const toast = document.getElementById('toast');
+
+    // 初始化事件绑定
+    btnStart.addEventListener('click', () => {
+      switchScreen(screenIntro, screenQuiz);
+      currentPage = 0;
+      renderPageDots();
+      renderCurrentPage();
+    });
+
+    btnPrevPage.addEventListener('click', () => {
+      if (currentPage > 0) {
+        currentPage--;
+        renderCurrentPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    btnNextPage.addEventListener('click', () => {
+      if (!validateCurrentPageAnswered()) {
+        showToast("请完成本页的所有 10 道题目后再点击下一页");
+        return;
+      }
+      if (currentPage < TOTAL_PAGES - 1) {
+        currentPage++;
+        renderCurrentPage();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    btnSubmit.addEventListener('click', () => {
+      if (!validateCurrentPageAnswered()) {
+        showToast("请完成本页的所有题目后再提交");
+        return;
+      }
+      const unAnsweredIdx = answers.findIndex(a => a === 0);
+      if (unAnsweredIdx !== -1) {
+        showToast(`您还有题目尚未完成 (如第 ${unAnsweredIdx + 1} 题)`);
+        currentPage = Math.floor(unAnsweredIdx / ITEMS_PER_PAGE);
+        renderCurrentPage();
+        return;
+      }
+
+      // 计算结果并渲染
+      calculateAndRenderResults();
+      switchScreen(screenQuiz, screenResult);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    btnPrint.addEventListener('click', () => {
+      window.print();
+    });
+
+    btnRestart.addEventListener('click', () => {
+      if (confirm("确定要重新开始测评吗？当前测试数据将被清空。")) {
+        answers = new Array(90).fill(0);
+        updateProgress();
+        switchScreen(screenResult, screenIntro);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // 渲染分页圆点
+    function renderPageDots() {
+      pageDotsContainer.innerHTML = '';
+      for (let i = 0; i < TOTAL_PAGES; i++) {
+        const dot = document.createElement('div');
+        dot.className = `w-2 h-2 rounded-full transition-all duration-200 ${i === currentPage ? 'bg-brand-600 w-4' : 'bg-slate-300'}`;
+        pageDotsContainer.appendChild(dot);
+      }
+    }
+
+    // 渲染当前页面的题目列表
+    function renderCurrentPage() {
+      pageIndicator.textContent = `第 ${currentPage + 1} / ${TOTAL_PAGES} 页`;
+      
+      // 控制翻页按钮状态
+      btnPrevPage.disabled = currentPage === 0;
+
+      if (currentPage === TOTAL_PAGES - 1) {
+        btnNextPage.classList.add('hidden');
+        btnSubmit.classList.remove('hidden');
+      } else {
+        btnNextPage.classList.remove('hidden');
+        btnSubmit.classList.add('hidden');
+      }
+
+      renderPageDots();
+
+      const startIndex = currentPage * ITEMS_PER_PAGE;
+      const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, scl90Items.length);
+
+      questionsContainer.innerHTML = '';
+
+      for (let i = startIndex; i < endIndex; i++) {
+        const itemText = scl90Items[i];
+        const itemVal = answers[i];
+
+        const card = document.createElement('div');
+        card.id = `q-card-${i}`;
+        card.className = `bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-sm space-y-3 transition duration-200 ${itemVal === 0 ? '' : 'border-l-4 border-l-brand-600'}`;
+
+        card.innerHTML = `
+          <div class="text-sm font-medium text-slate-800 leading-relaxed flex items-start justify-between gap-2">
+            <span>${itemText}</span>
+            <span id="badge-${i}" class="text-[11px] px-2 py-0.5 rounded ${itemVal > 0 ? 'bg-brand-50 text-brand-600 font-bold' : 'bg-slate-100 text-slate-400'} shrink-0">
+              ${itemVal > 0 ? options[itemVal - 1].text : '未选'}
+            </span>
+          </div>
+          <div class="grid grid-cols-5 gap-1.5 sm:gap-3 pt-1">
+            ${options.map(opt => `
+              <button type="button" 
+                      onclick="selectOption(${i}, ${opt.val})"
+                      class="option-btn option-btn-${i}-${opt.val} py-2 px-1 text-xs sm:text-sm rounded-lg border border-slate-200 text-slate-600 flex flex-col sm:flex-row items-center justify-center gap-1 ${itemVal === opt.val ? 'active' : ''}">
+                <span class="font-bold text-xs">${opt.val}</span>
+                <span class="text-[11px] sm:text-xs">${opt.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        `;
+
+        questionsContainer.appendChild(card);
+      }
+    }
+
+    // 处理选项选中
+    window.selectOption = function(itemIndex, value) {
+      answers[itemIndex] = value;
+
+      // 更新卡片视觉
+      const card = document.getElementById(`q-card-${itemIndex}`);
+      if (card) {
+        card.classList.add('border-l-4', 'border-l-brand-600');
+      }
+
+      const badge = document.getElementById(`badge-${itemIndex}`);
+      if (badge) {
+        badge.className = "text-[11px] px-2 py-0.5 rounded bg-brand-50 text-brand-600 font-bold shrink-0";
+        badge.textContent = options[value - 1].text;
+      }
+
+      // 更新当前题目下的 5 个按钮
+      options.forEach(opt => {
+        const btn = document.querySelector(`.option-btn-${itemIndex}-${opt.val}`);
+        if (btn) {
+          if (opt.val === value) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        }
+      });
+
+      updateProgress();
+    };
+
+    // 检查当前页是否已全部选择
+    function validateCurrentPageAnswered() {
+      const startIndex = currentPage * ITEMS_PER_PAGE;
+      const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, scl90Items.length);
+      
+      for (let i = startIndex; i < endIndex; i++) {
+        if (answers[i] === 0) {
+          // 高亮首个未答题目
+          const card = document.getElementById(`q-card-${i}`);
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.classList.add('ring-2', 'ring-amber-400');
+            setTimeout(() => card.classList.remove('ring-2', 'ring-amber-400'), 1500);
+          }
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // 更新整体进度条
+    function updateProgress() {
+      const answered = answers.filter(a => a > 0).length;
+      answeredCountEl.textContent = answered;
+      const pct = Math.round((answered / 90) * 100);
+      progressPercentEl.textContent = `${pct}%`;
+      progressBarInner.style.width = `${pct}%`;
+    }
+
+    // 格式化输出今日日期
+    function getFormattedDate() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    // 核心评分算法与结果填充
+    function calculateAndRenderResults() {
+      document.getElementById('report-date').textContent = getFormattedDate();
+
+      // 1. 基础分值计算
+      const totalScore = answers.reduce((sum, val) => sum + val, 0);
+      const gsi = (totalScore / 90).toFixed(2);
+      
+      const positiveItems = answers.filter(val => val >= 2);
+      const posCount = positiveItems.length;
+      const posTotalScore = positiveItems.reduce((sum, val) => sum + val, 0);
+      const pst = posCount > 0 ? (posTotalScore / posCount).toFixed(2) : "0.00";
+
+      document.getElementById('res-total-score').textContent = totalScore;
+      document.getElementById('res-gsi').textContent = gsi;
+      document.getElementById('res-pos-count').textContent = posCount;
+      document.getElementById('res-pst').textContent = pst;
+
+      // 2. 整体诊断判定依据规范 (SCL-90 标准阳性界限: 总分>160 或 阳性项目数>43 或 任一因子分>=2.0)
+      const summaryBox = document.getElementById('res-summary-box');
+      let isPositiveBreak = (totalScore > 160) || (posCount > 43);
+
+      // 计算各因子得分
+      const factorResults = {};
+      let highFactorCount = 0;
+      let severeFactorCount = 0;
+
+      for (const [key, fObj] of Object.entries(factorDefinitions)) {
+        // fObj.items 是 1-based 的项目编号，需转换为 0-based 数组索引
+        const sum = fObj.items.reduce((acc, itemNum) => acc + answers[itemNum - 1], 0);
+        const score = parseFloat((sum / fObj.items.length).toFixed(2));
+        
+        factorResults[key] = {
+          name: fObj.name,
+          score: score,
+          desc: fObj.desc,
+          itemCount: fObj.items.length
+        };
+
+        if (score >= 2.0) highFactorCount++;
+        if (score >= 3.0) severeFactorCount++;
+      }
+
+      if (isPositiveBreak || highFactorCount > 0) {
+        isPositiveBreak = true;
+      }
+
+      if (!isPositiveBreak) {
+        summaryBox.className = "mt-6 p-4 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-900 leading-relaxed text-sm";
+        summaryBox.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-base mb-1">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i>
+            <span>总体结果：心理健康状况总体良好</span>
+          </div>
+          <p class="text-xs text-emerald-800">
+            您的总分为 <b>${totalScore}</b>，总均分为 <b>${gsi}</b>，阳性项目数为 <b>${posCount}</b> 项。所有 10 项心理因子分均低于 2.0 临界界限。表明您近期身心状态较为稳定，未见明显的心理困扰或躯体不适。建议继续保持规律作息与积极心态。
+          </p>
+        `;
+      } else if (severeFactorCount === 0) {
+        summaryBox.className = "mt-6 p-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-900 leading-relaxed text-sm";
+        summaryBox.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-base mb-1">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+            <span>总体结果：提示存在轻度心理情绪困扰</span>
+          </div>
+          <p class="text-xs text-amber-800">
+            您的总分为 <b>${totalScore}</b>（阳性数 <b>${posCount}</b>），其中有 <b>${highFactorCount}</b> 项因子的平均分大于等于 2.0（轻度体验）。这表明您近期可能在特定方面（如情绪压力、睡眠或社交）受到了一定程度的轻度困扰。建议结合下方各因子剖析做针对性放松调整。
+          </p>
+        `;
+      } else {
+        summaryBox.className = "mt-6 p-4 rounded-xl border border-rose-200 bg-rose-50 text-rose-900 leading-relaxed text-sm";
+        summaryBox.innerHTML = `
+          <div class="flex items-center gap-2 font-bold text-base mb-1">
+            <i class="fa-solid fa-circle-exclamation text-rose-600"></i>
+            <span>总体结果：部分因子得分偏高（存在中度及以上显症）</span>
+          </div>
+          <p class="text-xs text-rose-800">
+            测评显示您的总分为 <b>${totalScore}</b>，阳性项目数为 <b>${posCount}</b> 项。共有 <b>${severeFactorCount}</b> 个因子的得分达到或超过 3.0 分（中度及以上显症）。这提示您近期在对应领域承受着较显著的心理应激或症状困扰，建议适时寻求专业心理门诊或咨询师的系统协助。
+          </p>
+        `;
+      }
+
+      // 3. 渲染柱状图 (Factor Score CSS Bar Chart)
+      const chartContainer = document.getElementById('factors-chart-container');
+      chartContainer.innerHTML = '';
+
+      for (const [key, res] of Object.entries(factorResults)) {
+        // 柱状图百分比映射: 1.0分 -> 0%, 5.0分 -> 100%
+        const pct = Math.min(Math.max(((res.score - 1) / 4) * 100, 2), 100);
+        
+        let barColorClass = "bg-brand-500";
+        let statusTag = '<span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded text-[10px] font-bold">正常</span>';
+
+        if (res.score >= 3.0) {
+          barColorClass = "bg-rose-500";
+          statusTag = '<span class="text-rose-600 bg-rose-50 px-2 py-0.5 rounded text-[10px] font-bold">中度/偏重</span>';
+        } else if (res.score >= 2.0) {
+          barColorClass = "bg-amber-500";
+          statusTag = '<span class="text-amber-600 bg-amber-50 px-2 py-0.5 rounded text-[10px] font-bold">轻度显症</span>';
+        }
+
+        const barRow = document.createElement('div');
+        barRow.className = "space-y-1";
+        barRow.innerHTML = `
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-700 w-24">${res.name}</span>
+              ${statusTag}
+            </div>
+            <span class="font-bold font-mono text-slate-800 text-sm">${res.score.toFixed(2)} <span class="text-[10px] text-slate-400 font-normal">/ 5.0</span></span>
+          </div>
+          <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden relative">
+            <!-- 2.0 临界线标示 -->
+            <div class="absolute left-[25%] top-0 bottom-0 border-r border-slate-300 z-10 opacity-70" title="2.0 轻度临界线"></div>
+            <!-- 3.0 临界线标示 -->
+            <div class="absolute left-[50%] top-0 bottom-0 border-r border-rose-300 z-10 opacity-70" title="3.0 中度临界线"></div>
+            <div class="${barColorClass} h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+          </div>
+        `;
+        chartContainer.appendChild(barRow);
+      }
+
+      // 4. 渲染各因子详细诊断卡片列表
+      const detailListContainer = document.getElementById('factors-detail-list');
+      detailListContainer.innerHTML = '';
+
+      for (const [key, res] of Object.entries(factorResults)) {
+        let cardBorder = "border-slate-200 bg-slate-50/50";
+        let scoreBadge = "bg-slate-100 text-slate-700";
+        let evalText = "在正常范围内，未见明显主观困扰。";
+
+        if (res.score >= 3.0) {
+          cardBorder = "border-rose-200 bg-rose-50/30";
+          scoreBadge = "bg-rose-100 text-rose-800 font-bold";
+          evalText = "提示中度至较重主观体验，建议给予关注或寻求专业心理辅导。";
+        } else if (res.score >= 2.0) {
+          cardBorder = "border-amber-200 bg-amber-50/30";
+          scoreBadge = "bg-amber-100 text-amber-800 font-bold";
+          evalText = "提示轻度偏高体验，可能与近期压力或环境变化有关。";
+        }
+
+        const detailCard = document.createElement('div');
+        detailCard.className = `p-4 rounded-xl border ${cardBorder} space-y-2 text-xs`;
+        detailCard.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-sm text-slate-800">${res.name}</span>
+            <span class="px-2 py-0.5 rounded ${scoreBadge} font-mono text-xs">得分: ${res.score.toFixed(2)}</span>
+          </div>
+          <p class="text-slate-500 leading-relaxed">${res.desc}</p>
+          <div class="pt-1 text-slate-700 border-t border-slate-200/60 font-medium">
+            评估诊断：${evalText}
+          </div>
+        `;
+        detailListContainer.appendChild(detailCard);
+      }
+    }
+
+    // 屏幕切换辅助函数
+    function switchScreen(fromScreen, toScreen) {
+      fromScreen.classList.add('hidden');
+      toScreen.classList.remove('hidden');
+    }
+
+    // Toast 浮动提示
+    function showToast(msg) {
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
